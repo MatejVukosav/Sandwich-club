@@ -19,50 +19,50 @@ public class DetailActivity extends AppCompatActivity {
     ActivityDetailBinding binding;
 
     @Override
-    protected void onCreate( Bundle savedInstanceState ) {
-        super.onCreate( savedInstanceState );
-        binding = DataBindingUtil.setContentView( this, R.layout.activity_detail );
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_detail);
 
-        ImageView ingredientsIv = findViewById( R.id.image_iv );
+        ImageView ingredientsIv = findViewById(R.id.image_iv);
 
         Intent intent = getIntent();
-        if ( intent == null ) {
+        if (intent == null) {
             closeOnError();
         }
 
-        int position = intent.getIntExtra( EXTRA_POSITION, DEFAULT_POSITION );
-        if ( position == DEFAULT_POSITION ) {
+        int position = intent.getIntExtra(EXTRA_POSITION, DEFAULT_POSITION);
+        if (position == DEFAULT_POSITION) {
             // EXTRA_POSITION not found in intent
             closeOnError();
             return;
         }
 
-        String[] sandwiches = getResources().getStringArray( R.array.sandwich_details );
+        String[] sandwiches = getResources().getStringArray(R.array.sandwich_details);
         String json = sandwiches[position];
-        Sandwich sandwich = JsonUtils.parseSandwichJson( json );
-        if ( sandwich == null ) {
+        Sandwich sandwich = JsonUtils.parseSandwichJson(json);
+        if (sandwich == null) {
             // Sandwich data unavailable
             closeOnError();
             return;
         }
 
-        populateUI( sandwich );
-        Picasso.with( this )
-                .load( sandwich.getImage() )
-                .into( ingredientsIv );
+        populateUI(sandwich);
+        Picasso.with(this)
+                .load(sandwich.getImage())
+                .into(ingredientsIv);
 
-        setTitle( sandwich.getMainName() );
+        setTitle(sandwich.getMainName());
     }
 
     private void closeOnError() {
         finish();
-        Toast.makeText( this, R.string.detail_error_message, Toast.LENGTH_SHORT ).show();
+        Toast.makeText(this, R.string.detail_error_message, Toast.LENGTH_SHORT).show();
     }
 
-    private void populateUI( Sandwich sandwich ) {
-        binding.originTv.setText( sandwich.getPlaceOfOrigin() );
-        binding.alsoKnownTv.setText( sandwich.getAlsoKnownAs().toString() );
-        binding.ingredientsTv.setText( sandwich.getIngredients().toString() );
-        binding.descriptionTv.setText( sandwich.getDescription() );
+    private void populateUI(Sandwich sandwich) {
+        binding.originTv.setText(sandwich.getPlaceOfOrigin());
+        binding.alsoKnownTv.setText(sandwich.getAlsoKnownAs().toString());
+        binding.ingredientsTv.setText(sandwich.getIngredients().toString());
+        binding.descriptionTv.setText(sandwich.getDescription());
     }
 }
