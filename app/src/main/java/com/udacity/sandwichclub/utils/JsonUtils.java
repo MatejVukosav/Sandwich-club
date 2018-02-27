@@ -14,6 +14,15 @@ import java.util.List;
 
 public class JsonUtils {
 
+    private static final String DESCRIPTION = "description";
+    private static final String NAME = "name";
+    private static final String MAIN_NAME = "mainName";
+    private static final String ALSO_KNOWN_AS = "alsoKnownAs";
+    private static final String IMAGE = "image";
+    private static final String INGREDIENTS = "ingredients";
+    private static final String PLACE_OF_ORIGIN = "placeOfOrigin";
+
+
     public static Sandwich parseSandwichJson(String json) {
         if (TextUtils.isEmpty(json)) {
             return null;
@@ -28,16 +37,16 @@ public class JsonUtils {
         String placeOfOrigin = null;
         try {
             JSONObject sandwichObject = new JSONObject(json);
-            description = sandwichObject.getString("description");
+            description = sandwichObject.optString(DESCRIPTION);
 
-            JSONObject name = sandwichObject.getJSONObject("name");
+            JSONObject name = sandwichObject.getJSONObject(NAME);
             if (name != null) {
-                mainName = name.getString("mainName");
-                alsoKnownAs = extractToList(name.getJSONArray("alsoKnownAs"));
+                mainName = name.optString(MAIN_NAME);
+                alsoKnownAs = extractToList(name.getJSONArray(ALSO_KNOWN_AS));
             }
-            image = sandwichObject.getString("image");
-            ingredients = extractToList(sandwichObject.getJSONArray("ingredients"));
-            placeOfOrigin = sandwichObject.getString("placeOfOrigin");
+            image = sandwichObject.optString(IMAGE);
+            ingredients = extractToList(sandwichObject.getJSONArray(INGREDIENTS));
+            placeOfOrigin = sandwichObject.optString(PLACE_OF_ORIGIN);
         } catch (JSONException e) {
             e.printStackTrace();
         }

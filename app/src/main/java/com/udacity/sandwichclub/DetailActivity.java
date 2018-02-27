@@ -111,6 +111,8 @@ public class DetailActivity extends AppCompatActivity {
 
         Picasso.with(this)
                 .load(sandwich.getImage())
+                .placeholder(android.R.drawable.ic_menu_report_image)
+                .error(android.R.drawable.ic_delete)
                 .into(binding.imageIv);
     }
 }
