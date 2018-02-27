@@ -62,4 +62,17 @@ public class JsonUtils {
         return list;
     }
 
+    public static String getStringFromList(List<String> list) {
+        StringBuilder builder = new StringBuilder();
+        int itemCount = 0;
+        for (String item : list) {
+            builder.append(item);
+            itemCount++;
+            if (itemCount < list.size()) {
+                builder.append(", ");
+            }
+        }
+        return builder.toString();
+    }
+
 }
